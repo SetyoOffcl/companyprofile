@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Contact;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
@@ -14,7 +15,10 @@ class ContactController extends Controller
      */
     public function index()
     {
-        //
+        $items = Contact::firstOrCreate();
+        return view('pages.admin.contact.index')->with([
+            'items' => $items
+        ]);
     }
 
     /**
@@ -35,7 +39,10 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $items = $request->only('address','email','phone','open');
+        $data = Contact::firstOrCreate();
+        $data->update($items);
+        return back();
     }
 
     /**

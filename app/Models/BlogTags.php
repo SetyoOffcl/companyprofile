@@ -15,4 +15,9 @@ class BlogTags extends Model
         'tags_id',
         'blog_id',
     ];
+    
+    public function tag()
+    {
+        return $this->belongsTo(Tags::class, 'tags_id','id');
+    }
 }

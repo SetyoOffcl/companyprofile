@@ -11,7 +11,7 @@
   <meta content="" name="keywords">
 
   @include('includes.landingpage.style')
-  @stack('after-script')
+  @stack('after-style')
 </head>
 
 <body>
@@ -22,7 +22,9 @@
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
     @include('includes.landingpage.footer')
 
+    @stack('before-script')
     @include('includes.landingpage.script')
+    @stack('after-script')
 </body>
 
 </html>

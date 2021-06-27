@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\FAQ;
 use Illuminate\Http\Request;
 
 class FAQController extends Controller
@@ -14,7 +15,10 @@ class FAQController extends Controller
      */
     public function index()
     {
-        //
+        $items = FAQ::orderBy('id','desc')->paginate(10);
+        return view('pages.admin.faq.index')->with([
+            'items' => $items
+        ]);
     }
 
     /**
@@ -24,7 +28,7 @@ class FAQController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.admin.faq.create');
     }
 
     /**
@@ -35,7 +39,14 @@ class FAQController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'desc' => 'required'
+        ]);
+        $items = $request->only('title','desc');
+        FAQ::create($items);
+        
+        return redirect()->route('admin.faq.index');
     }
 
     /**
@@ -57,7 +68,10 @@ class FAQController extends Controller
      */
     public function edit($id)
     {
-        //
+        $items = FAQ::findOrFail($id);
+        return view('pages.admin.faq.edit')->with([
+            'items' => $items
+        ]);
     }
 
     /**
@@ -69,7 +83,18 @@ class FAQController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $request->validate([
+            'title' => 'required',
+            'desc' => 'required',
+        ]);
+
+        $items = $request->only('title','desc');
+
+        $data = FAQ::find($id);
+        $data->update($items);
+        
+        return redirect()->route('admin.faq.index');
     }
 
     /**
@@ -80,6 +105,7 @@ class FAQController extends Controller
      */
     public function destroy($id)
     {
-        //
+        FAQ::findOrFail($id)->delete();
+        return back();
     }
 }

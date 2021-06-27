@@ -27,7 +27,9 @@
                   <li><a class="nav-link" href="{{ route('admin.testimoni.index') }}">Testimoni</a></li>
                   <li><a class="nav-link" href="{{ route('admin.team.index') }}">Team</a></li>
                   <li><a class="nav-link" href="{{ route('admin.client.index') }}">Client</a></li>
-                  <li><a class="nav-link" href="{{ route('admin.footer.index') }}">Client</a></li>
+                  <li><a class="nav-link" href="{{ route('admin.footer.index') }}">Footer</a></li>
+                  <li><a class="nav-link" href="{{ route('admin.faq.index') }}">FAQ</a></li>
+                  <li><a class="nav-link" href="{{ route('admin.contact.index') }}">Contact</a></li>
                 </ul>
               </li>
               <li class="nav-item dropdown">
@@ -40,10 +42,12 @@
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Blog</span></a>
                 <ul class="dropdown-menu">
+                  <li><a class="nav-link" href="{{ route('admin.blogcategory.index') }}">Category</a></li>
+                  <li><a class="nav-link" href="{{ route('admin.tags.index') }}">Tags</a></li>
                   <li><a class="nav-link" href="{{ route('admin.blog.index') }}">Blog</a></li>
                 </ul>
               </li>
-              <li class="menu-header">Contact US</li>
+              <li class="menu-header">Message</li>
               <li>
                 <a class="nav-link" href="{{ route('admin.dashboard.index') }}">
                     <i class="far fa-square"></i> 

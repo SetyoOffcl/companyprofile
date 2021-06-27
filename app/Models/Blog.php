@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,7 +16,17 @@ class Blog extends Model
         'title',
         'slug',
         'desc',
-        'name',
+        'image',
         'category',
     ];
+
+    public function tags()
+    {
+        return $this->hasMany(BlogTags::class, 'blog_id');
+    }
+
+    public function getCreatedAtAttribute($date)
+    {
+        return Carbon::parse($date)->diffForHumans();
+    }
 }

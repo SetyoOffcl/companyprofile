@@ -1,24 +1,36 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\API;
 
+use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
-use App\Models\Footer;
+use App\Models\Blog;
+use Exception;
 use Illuminate\Http\Request;
 
-class FooterController extends Controller
+class BlogController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $items = Footer::firstOrCreate();
-        return view('pages.admin.footer.index')->with([
-            'items' => $items
-        ]);
+        try {    
+            $items = Blog::with('tags.tag')
+                    ->where('title','like','%'.$request->title.'%')
+                    ->orderBy('id','desc')
+                    ->get();
+            return ResponseFormatter::success([
+                'items' => $items
+            ],'Success');
+        } catch (Exception $error) {
+            return ResponseFormatter::error([
+                'message' => 'Something went wrong',
+                'error' => $error,
+            ],'Load Data Failed', 500);
+        }
     }
 
     /**
@@ -39,10 +51,7 @@ class FooterController extends Controller
      */
     public function store(Request $request)
     {
-        $items = $request->only('desc','ig','fb','twitter','linkedin');
-        $data = Footer::firstOrCreate();
-        $data->update($items);
-        return back();
+        //
     }
 
     /**

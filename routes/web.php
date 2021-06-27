@@ -36,6 +36,8 @@ Route::prefix('admin')
                     'faq' => 'FAQController',
                     'contact' => 'ContactController',
                     'footer' => 'FooterController',
+                    'tags' => 'TagsController',
+                    'blogcategory' => 'BlogCategoryController',
                 ]);
                 //about
                 Route::get('about','CompanyController@about')->name('about');
