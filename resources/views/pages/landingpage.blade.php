@@ -7,8 +7,8 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-6 d-flex flex-column justify-content-center">
-        <h1 data-aos="fade-up">We offer modern solutions for growing your business</h1>
-        <h2 data-aos="fade-up" data-aos-delay="400">We are team of talented designers making websites with Bootstrap</h2>
+        <h1 data-aos="fade-up">{{ $items->home_title ?? 'We offer modern solutions for growing your business' }}</h1>
+        <h2 data-aos="fade-up" data-aos-delay="400">{{ $items->home_desc ?? 'We are team of talented designers making websites with Bootstrap' }}</h2>
         <div data-aos="fade-up" data-aos-delay="600">
           <div class="text-center text-lg-start">
             <a href="#about" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">
@@ -19,7 +19,11 @@
         </div>
       </div>
       <div class="col-lg-6 hero-img" data-aos="zoom-out" data-aos-delay="200">
+        @if ($items->home_image ?? 0)
+        <img src="{{ Storage::url($items->home_image) }}" class="img-fluid" alt="">
+        @else
         <img src="{{ asset('assets/img/hero-img.png') }}" class="img-fluid" alt="">
+        @endif
       </div>
     </div>
   </div>
@@ -35,16 +39,19 @@
 
         <div class="col-lg-6 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
           <div class="content">
-            <h3>Who We Are</h3>
-            <h2>Expedita voluptas omnis cupiditate totam eveniet nobis sint iste. Dolores est repellat corrupti reprehenderit.</h2>
+            <h2>{{ $items->about_title ?? 'Expedita voluptas omnis cupiditate totam eveniet nobis sint iste. Dolores est repellat corrupti reprehenderit.' }}</h2>
             <p>
-              Quisquam vel ut sint cum eos hic dolores aperiam. Sed deserunt et. Inventore et et dolor consequatur itaque ut voluptate sed et. Magnam nam ipsum tenetur suscipit voluptatum nam et est corrupti.
+              {{ $items->about_desc ?? 'Quisquam vel ut sint cum eos hic dolores aperiam. Sed deserunt et. Inventore et et dolor consequatur itaque ut voluptate sed et. Magnam nam ipsum tenetur suscipit voluptatum nam et est corrupti.' }}
             </p>
           </div>
         </div>
 
         <div class="col-lg-6 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="200">
-          <img src="{{ asset('assets/img/about.jpg') }}" class="img-fluid" alt="">
+          @if ($items->about_image ?? 0)
+          <img src="{{ Storage::url($items->about_image) }}" class="img-fluid" alt="">
+          @else
+          <img src="{{ asset('assets/img/about.jpg') }}" class="img-fluid" alt="">            
+          @endif
         </div>
 
       </div>
@@ -58,35 +65,22 @@
     <div class="container" data-aos="fade-up">
 
       <header class="section-header">
-        <h2>Service</h2>
-        <p>Services</p>
+        <h2>{{ $items->service_title ?? 'Service' }}</h2>
+        <p>{{ $items->service_desc ?? 'Service' }}</p>
       </header>
 
       <div class="row">
 
+        @forelse ($service as $s)
         <div class="col-lg-4">
           <div class="box" data-aos="fade-up" data-aos-delay="200">
-            <img src="{{ asset('assets/img/values-1.png') }}" class="img-fluid" alt="">
-            <h3>Ad cupiditate sed est odio</h3>
-            <p>Eum ad dolor et. Autem aut fugiat debitis voluptatem consequuntur sit. Et veritatis id.</p>
+            <img src="{{ Storage::url($s->image) }}" class="img-fluid" alt="">
+            <h3>{{ $s->title }}</h3>
+            <p>{{ $s->desc }}</p>
           </div>
         </div>
-
-        <div class="col-lg-4 mt-4 mt-lg-0">
-          <div class="box" data-aos="fade-up" data-aos-delay="400">
-            <img src="{{ asset('assets/img/values-2.png') }}" class="img-fluid" alt="">
-            <h3>Voluptatem voluptatum alias</h3>
-            <p>Repudiandae amet nihil natus in distinctio suscipit id. Doloremque ducimus ea sit non.</p>
-          </div>
-        </div>
-
-        <div class="col-lg-4 mt-4 mt-lg-0">
-          <div class="box" data-aos="fade-up" data-aos-delay="600">
-            <img src="{{ asset('assets/img/values-3.png') }}" class="img-fluid" alt="">
-            <h3>Fugit cupiditate alias nobis.</h3>
-            <p>Quam rem vitae est autem molestias explicabo debitis sint. Vero aliquid quidem commodi.</p>
-          </div>
-        </div>
+        @empty
+        @endforelse
 
       </div>
 
@@ -151,76 +145,31 @@
     <div class="container" data-aos="fade-up">
 
       <header class="section-header">
-        <h2>Pricing</h2>
-        <p>Check our Pricing</p>
+        <h2>{{ $items->pricing_title ?? 'PRICING'}}</h2>
+        <p>{{ $items->pricing_desc ?? 'Check our Pricing' }}</p>
       </header>
 
       <div class="row gy-4" data-aos="fade-left">
 
+        @forelse ($pricing as $p)
         <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="100">
           <div class="box">
-            <h3 style="color: #07d5c0;">Free Plan</h3>
-            <div class="price"><sup>$</sup>0<span> / mo</span></div>
-            <img src="{{ asset('assets/img/pricing-free.png') }}" class="img-fluid" alt="">
-            <ul>
-              <li>Aida dere</li>
-              <li>Nec feugiat nisl</li>
-              <li>Nulla at volutpat dola</li>
-              <li class="na">Pharetra massa</li>
-              <li class="na">Massa ultricies mi</li>
-            </ul>
-            <a href="#" class="btn-buy">Buy Now</a>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="200">
-          <div class="box">
+            @if ($p->is_default)
             <span class="featured">Featured</span>
-            <h3 style="color: #65c600;">Starter Plan</h3>
-            <div class="price"><sup>$</sup>19<span> / mo</span></div>
-            <img src="{{ asset('assets/img/pricing-starter.png') }}" class="img-fluid" alt="">
+            @endif
+            <h3 style="color: #07d5c0;">{{ $p->title }}</h3>
+            <div class="price"><sup>$</sup>{{ $p->price }}<span> / mo</span></div>
+            <img src="{{ Storage::url($items->image) }}" class="img-fluid" alt="">
             <ul>
-              <li>Aida dere</li>
-              <li>Nec feugiat nisl</li>
-              <li>Nulla at volutpat dola</li>
-              <li>Pharetra massa</li>
-              <li class="na">Massa ultricies mi</li>
+              @foreach ($p->detail as $pd)
+                <li class="@if($pd->is_default == 0) na @endif">{{ $pd->name }}</li>
+              @endforeach
             </ul>
-            <a href="#" class="btn-buy">Buy Now</a>
+            {{-- <a href="#" class="btn-buy">Buy Now</a> --}}
           </div>
         </div>
-
-        <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="300">
-          <div class="box">
-            <h3 style="color: #ff901c;">Business Plan</h3>
-            <div class="price"><sup>$</sup>29<span> / mo</span></div>
-            <img src="{{ asset('assets/img/pricing-business.png') }}" class="img-fluid" alt="">
-            <ul>
-              <li>Aida dere</li>
-              <li>Nec feugiat nisl</li>
-              <li>Nulla at volutpat dola</li>
-              <li>Pharetra massa</li>
-              <li>Massa ultricies mi</li>
-            </ul>
-            <a href="#" class="btn-buy">Buy Now</a>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="400">
-          <div class="box">
-            <h3 style="color: #ff0071;">Ultimate Plan</h3>
-            <div class="price"><sup>$</sup>49<span> / mo</span></div>
-            <img src="{{ asset('assets/img/pricing-ultimate.png') }}" class="img-fluid" alt="">
-            <ul>
-              <li>Aida dere</li>
-              <li>Nec feugiat nisl</li>
-              <li>Nulla at volutpat dola</li>
-              <li>Pharetra massa</li>
-              <li>Massa ultricies mi</li>
-            </ul>
-            <a href="#" class="btn-buy">Buy Now</a>
-          </div>
-        </div>
+        @empty
+        @endforelse
 
       </div>
 
@@ -234,148 +183,44 @@
     <div class="container" data-aos="fade-up">
 
       <header class="section-header">
-        <h2>Portfolio</h2>
-        <p>Check our latest work</p>
+        <h2>{{ $items->portfolio_title ?? 'PORTFOLIO' }}</h2>
+        <p>{{ $items->portfolio_desc ?? 'Check our latest work' }}</p>
       </header>
 
       <div class="row" data-aos="fade-up" data-aos-delay="100">
         <div class="col-lg-12 d-flex justify-content-center">
           <ul id="portfolio-flters">
+            
             <li data-filter="*" class="filter-active">All</li>
-            <li data-filter=".filter-app">App</li>
-            <li data-filter=".filter-card">Card</li>
-            <li data-filter=".filter-web">Web</li>
+            @forelse ($category as $cat)
+            <li data-filter=".{{ $cat->name }}">{{ $cat->name }}</li>
+            @empty
+              
+            @endforelse
           </ul>
         </div>
       </div>
 
       <div class="row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="200">
 
-        <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+        @forelse ($portfolio as $pp)
+          
+        <div class="col-lg-4 col-md-6 portfolio-item {{ $pp->category }}">
           <div class="portfolio-wrap">
-            <img src="{{ asset('assets/img/portfolio/portfolio-1.jpg') }}" class="img-fluid" alt="">
+            <img src="{{ Storage::url($pp->image) }}" class="img-fluid" alt="">
             <div class="portfolio-info">
               <h4>App 1</h4>
               <p>App</p>
               <div class="portfolio-links">
-                <a href="{{ asset('assets/img/portfolio/portfolio-1.jpg') }}" data-gallery="portfolioGallery" class="portfokio-lightbox" title="App 1"><i class="bi bi-plus"></i></a>
+                <a href="{{ Storage::url($pp->image) }}" data-gallery="portfolioGallery" class="portfokio-lightbox" title="App 1"><i class="bi bi-plus"></i></a>
                 <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
               </div>
             </div>
           </div>
         </div>
-
-        <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-          <div class="portfolio-wrap">
-            <img src="{{ asset('assets/img/portfolio/portfolio-2.jpg') }}" class="img-fluid" alt="">
-            <div class="portfolio-info">
-              <h4>Web 3</h4>
-              <p>Web</p>
-              <div class="portfolio-links">
-                <a href="{{ asset('assets/img/portfolio/portfolio-2.jpg') }}" data-gallery="portfolioGallery" class="portfokio-lightbox" title="Web 3"><i class="bi bi-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-          <div class="portfolio-wrap">
-            <img src="{{ asset('assets/img/portfolio/portfolio-3.jpg') }}" class="img-fluid" alt="">
-            <div class="portfolio-info">
-              <h4>App 2</h4>
-              <p>App</p>
-              <div class="portfolio-links">
-                <a href="{{ asset('assets/img/portfolio/portfolio-3.jpg') }}" data-gallery="portfolioGallery" class="portfokio-lightbox" title="App 2"><i class="bi bi-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-          <div class="portfolio-wrap">
-            <img src="{{ asset('assets/img/portfolio/portfolio-4.jpg') }}" class="img-fluid" alt="">
-            <div class="portfolio-info">
-              <h4>Card 2</h4>
-              <p>Card</p>
-              <div class="portfolio-links">
-                <a href="{{ asset('assets/img/portfolio/portfolio-4.jpg') }}" data-gallery="portfolioGallery" class="portfokio-lightbox" title="Card 2"><i class="bi bi-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-          <div class="portfolio-wrap">
-            <img src="{{ asset('assets/img/portfolio/portfolio-5.jpg') }}" class="img-fluid" alt="">
-            <div class="portfolio-info">
-              <h4>Web 2</h4>
-              <p>Web</p>
-              <div class="portfolio-links">
-                <a href="{{ asset('assets/img/portfolio/portfolio-5.jpg') }}" data-gallery="portfolioGallery" class="portfokio-lightbox" title="Web 2"><i class="bi bi-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-          <div class="portfolio-wrap">
-            <img src="{{ asset('assets/img/portfolio/portfolio-6.jpg') }}" class="img-fluid" alt="">
-            <div class="portfolio-info">
-              <h4>App 3</h4>
-              <p>App</p>
-              <div class="portfolio-links">
-                <a href="{{ asset('assets/img/portfolio/portfolio-6.jpg') }}" data-gallery="portfolioGallery" class="portfokio-lightbox" title="App 3"><i class="bi bi-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-          <div class="portfolio-wrap">
-            <img src="{{ asset('assets/img/portfolio/portfolio-7.jpg') }}" class="img-fluid" alt="">
-            <div class="portfolio-info">
-              <h4>Card 1</h4>
-              <p>Card</p>
-              <div class="portfolio-links">
-                <a href="{{ asset('assets/img/portfolio/portfolio-7.jpg') }}" data-gallery="portfolioGallery" class="portfokio-lightbox" title="Card 1"><i class="bi bi-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-          <div class="portfolio-wrap">
-            <img src="{{ asset('assets/img/portfolio/portfolio-8.jpg') }}" class="img-fluid" alt="">
-            <div class="portfolio-info">
-              <h4>Card 3</h4>
-              <p>Card</p>
-              <div class="portfolio-links">
-                <a href="{{ asset('assets/img/portfolio/portfolio-8.jpg') }}" data-gallery="portfolioGallery" class="portfokio-lightbox" title="Card 3"><i class="bi bi-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-          <div class="portfolio-wrap">
-            <img src="{{ asset('assets/img/portfolio/portfolio-9.jpg') }}" class="img-fluid" alt="">
-            <div class="portfolio-info">
-              <h4>Web 3</h4>
-              <p>Web</p>
-              <div class="portfolio-links">
-                <a href="{{ asset('assets/img/portfolio/portfolio-9.jpg') }}" data-gallery="portfolioGallery" class="portfokio-lightbox" title="Web 3"><i class="bi bi-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
+        @empty
+          
+        @endforelse
 
       </div>
 

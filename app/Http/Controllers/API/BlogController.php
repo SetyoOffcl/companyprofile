@@ -18,8 +18,16 @@ class BlogController extends Controller
     public function index(Request $request)
     {
         try {    
-            $items = Blog::with('tags.tag')
+            $data = Blog::query();
+            $items = $data->with('tags.tag')
                     ->where('title','like','%'.$request->title.'%')
+                    ->where('category','like','%'.$request->category.'%')
+                    // ->whereDoesntHave('tags')
+                    ->whereHas('tags.tag', function($tag) use ($request){
+                        if ($request->tags) {
+                            $tag->where('name',$request->tags);
+                        }
+                    })
                     ->orderBy('id','desc')
                     ->get();
             return ResponseFormatter::success([

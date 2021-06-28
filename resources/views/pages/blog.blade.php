@@ -1,5 +1,16 @@
 @extends('layouts.landingpage')
 
+@push('after-style')
+  <style>
+    .loading{
+      font-weight: bold !important;
+      font-size: 76px;
+      text-transform: uppercase;
+      /* background-color: red; */
+    }
+  </style>
+@endpush
+
 @section('content')
 <main id="main">
 
@@ -29,72 +40,53 @@
             <h3 class="sidebar-title">Search</h3>
             <div class="sidebar-item search-form">
               <form action="">
-                <input type="text">
-                <button type="submit"><i class="bi bi-search"></i></button>
+                <input type="text" v-model="title">
+                <button type="button" @click="search(title , category, tags)">
+                  <i class="bi bi-search"></i>
+                </button>
               </form>
             </div><!-- End sidebar search formn-->
 
             <h3 class="sidebar-title">Categories</h3>
             <div class="sidebar-item categories">
               <ul>
-                <li><a href="#">General <span>(25)</span></a></li>
-                <li><a href="#">Lifestyle <span>(12)</span></a></li>
-                <li><a href="#">Travel <span>(5)</span></a></li>
-                <li><a href="#">Design <span>(22)</span></a></li>
-                <li><a href="#">Creative <span>(8)</span></a></li>
-                <li><a href="#">Educaion <span>(14)</span></a></li>
+                @foreach ($category as $cat)
+                <li>
+                  <a href="#" @click="search(title , '{{ $cat->category }}', tags)">
+                    {{ $cat->category }} <span>({{ $cat->total }})</span>
+                  </a>
+                </li>
+                @endforeach
               </ul>
             </div><!-- End sidebar categories-->
 
             <h3 class="sidebar-title">Recent Posts</h3>
             <div class="sidebar-item recent-posts">
+              @foreach ($limit as $i)
               <div class="post-item clearfix">
-                <img src="assets/img/blog/blog-recent-1.jpg" alt="">
-                <h4><a href="blog-single.html">Nihil blanditiis at in nihil autem</a></h4>
-                <time datetime="2020-01-01">Jan 1, 2020</time>
+                <img src="{{ Storage::url($i->image) }}" alt="">
+                <h4><a href="{{ route('blog.show',$i->slug) }}">{{ Str::limit($i->title, 20, '...') }}</a></h4>
+                <time datetime="2020-01-01">{{ $i->created_at }}</time>
               </div>
-
-              <div class="post-item clearfix">
-                <img src="assets/img/blog/blog-recent-2.jpg" alt="">
-                <h4><a href="blog-single.html">Quidem autem et impedit</a></h4>
-                <time datetime="2020-01-01">Jan 1, 2020</time>
-              </div>
-
-              <div class="post-item clearfix">
-                <img src="assets/img/blog/blog-recent-3.jpg" alt="">
-                <h4><a href="blog-single.html">Id quia et et ut maxime similique occaecati ut</a></h4>
-                <time datetime="2020-01-01">Jan 1, 2020</time>
-              </div>
-
-              <div class="post-item clearfix">
-                <img src="assets/img/blog/blog-recent-4.jpg" alt="">
-                <h4><a href="blog-single.html">Laborum corporis quo dara net para</a></h4>
-                <time datetime="2020-01-01">Jan 1, 2020</time>
-              </div>
-
-              <div class="post-item clearfix">
-                <img src="assets/img/blog/blog-recent-5.jpg" alt="">
-                <h4><a href="blog-single.html">Et dolores corrupti quae illo quod dolor</a></h4>
-                <time datetime="2020-01-01">Jan 1, 2020</time>
-              </div>
+              @endforeach
 
             </div><!-- End sidebar recent posts-->
 
             <h3 class="sidebar-title">Tags</h3>
             <div class="sidebar-item tags">
               <ul>
-                <li><a href="#">App</a></li>
-                <li><a href="#" @click="tes('Llewellyn')">IT</a></li>
-                <li><a href="#">Business</a></li>
-                <li><a href="#">Mac</a></li>
-                <li><a href="#">Design</a></li>
-                <li><a href="#">Office</a></li>
-                <li><a href="#">Creative</a></li>
-                <li><a href="#">Studio</a></li>
-                <li><a href="#">Smart</a></li>
-                <li><a href="#">Tips</a></li>
-                <li><a href="#">Marketing</a></li>
+                @foreach ($tags as $tag)
+                <li>
+                    <a href="#" @click="search(title , category , '{{ $tag->name }}')">
+                      {{ $tag->name }}
+                    </a>
+                  </li>
+                @endforeach
               </ul>
+            </div><!-- End sidebar tags-->
+            <h3 class="sidebar-title">Tags</h3>
+            <div class="sidebar-item tags">
+              <button type="button" class="btn btn-primary" @click="reset()">reset</button>
             </div><!-- End sidebar tags-->
 
           </div><!-- End sidebar -->
@@ -114,7 +106,7 @@
             </div>
 
             <h2 class="entry-title">
-              <a href="blog-single.html">@{{ blog.title }}</a>
+              <a href="javascript:void(0)" @click="link(blog.slug)">@{{ blog.title }}</a>
             </h2>
 
             <div class="entry-meta">
@@ -124,16 +116,26 @@
             </div>
 
             <div class="entry-content">
-              <p>
-                @{{ blog.desc.substring(0,500)+".." }}
+              <p v-html="blog.desc.substring(0,500)+'..'">
+                @{{ blog.desc }}
               </p>
               <div class="read-more">
-                <a href="blog-single.html">Read More</a>
+                <a href="javascript:void(0)" @click="link(blog.slug)">Read More</a>
               </div>
             </div>
+            <br>
+            <div class="entry-footer">
+              <i class="bi bi-folder"></i>
+              <ul class="cats">
+                <li><a href="#">@{{ blog.category }}</a></li>
+              </ul>
 
+              <i class="bi bi-tags"></i>
+              <ul class="tags" >
+                <li v-for="tag in blog.tags" :key="tag.id"><a href="#">@{{ tag.tag.name }}</a></li>
+              </ul>
+            </div>
           </article><!-- End blog entry -->
-
         </div><!-- End blog entries list -->
 
       </div>
@@ -159,46 +161,62 @@
     el: "#blog",
     mounted() {
       AOS.init();
-      this.title = this.$route.query.title ?? '';
-      this.kategori = this.$route.query.kategori ?? '';
-      this.tags = this.$route.query.tags ?? '';
       this.getData();
     },
     data: {
       blogs: [],
       limit: 4,
       busy: false,
-      title: '',
-      kategori: '',
-      tags: '',
+      title: "",
+      category: "",
+      tags: "",
       length: 0,
+      reload: 0,
     },
     methods: {
-      search(title, search, category){
-        this.getData(id);
-        console.log(id);
+      search(title, category, tags){
+        console.log(title, category, tags);
+        this.title = title,
+        this.category = category,
+        this.tags = tags,
+        this.reload = 1,
+        this.getData();
       },
-      getData(title, tags, category) {
+      reset(){
+        this.title = '',
+        this.category = '',
+        this.tags = '',
+        this.reload = 1,
+        this.getData();
+      },
+      getData(title, category, tags) {
         console.log("Adding 10 more data results");
         this.busy = true;
-        axios.get("{{ route('api.blog') }}" + "?title=" + (title ?? '') + "&kategori=" + (category ?? '') + "&tags=" + (tags ?? '')).then(response => {
+        if(this.reload == 1){
+          this.blogs = [];
+          this.reload = 0;
+        }
+        axios.get("{{ route('api.blog') }}" + "?title=" + this.title + "&category=" + this.category + "&tags=" + this.tags).then(response => {
+          console.log(response);
           this.length = response.data.data.items.length;
-          if(response.data.data.items.length >= 5){
-            const append = response.data.data.items.slice(
-              this.blogs.length,
-              this.blogs.length + this.limit
-            );
-            console.log(append);
-            this.blogs = this.blogs.concat(append);
-            this.busy = false;
-          }else{
-            this.blogs = response.data.data.items;
-          }
+            if(response.data.data.items.length >= 5){
+              const append = response.data.data.items.slice(
+                this.blogs.length,
+                this.blogs.length + this.limit
+              );
+              this.blogs = this.blogs.concat(append);
+              this.busy = false;
+            }else{
+              this.blogs = response.data.data.items;
+            }
         });
       },
+      link(link){
+        window.location.href = "{{ url('blog') }}/" + link;
+      }
     },
     created() {
-      if(this.length >= 20){
+      if(this.length >= 5){
         this.getData();
       }
     }

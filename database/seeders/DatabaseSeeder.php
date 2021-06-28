@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(BlogCateroySeeder::class);
         \App\Models\Blog::factory(100)->create();
+        \App\Models\BlogTags::factory(100)->create();
     }
 }

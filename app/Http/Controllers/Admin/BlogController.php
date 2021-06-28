@@ -146,7 +146,7 @@ class BlogController extends Controller
      */
     public function edit($id)
     {
-        $items = Blog::with('tags')->firstOrFail();
+        $items = Blog::with('tags')->findOrFail($id);
         $tags = Tags::all();
         $category = BlogCategory::all();
 
@@ -195,9 +195,9 @@ class BlogController extends Controller
             $items['image'] = 'image/' . $filename;
         }
 
-        $blog = Blog::find($id);
+        $blog = Blog::with('tags')->find($id);
         $blog->update($items);
-
+        // return $blog;
         BlogTags::where('blog_id',$blog->id)->delete();
 
         foreach ($request->tag as $key) {
@@ -207,7 +207,8 @@ class BlogController extends Controller
             ]);
         }
         $blog->tags()->saveMany($tags);
-
+        // return $blog;
+        
         return redirect()->route('admin.blog.index');
     }
 

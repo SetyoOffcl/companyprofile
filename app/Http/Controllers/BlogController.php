@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
+use App\Models\Tags;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BlogController extends Controller
 {
@@ -13,7 +16,15 @@ class BlogController extends Controller
      */
     public function index()
     {
-        return view('pages.blog');
+        $category = Blog::groupBy('category')->select('category', DB::raw('count(*) as total'))->get();
+        $limit = Blog::take(5)->orderBy('id','desc')->get();
+        $tags = Tags::select('name')->get();
+
+        return view('pages.blog')->with([
+            'category' => $category,
+            'limit' => $limit,
+            'tags' => $tags,
+        ]);
     }
 
     /**

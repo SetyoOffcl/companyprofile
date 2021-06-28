@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Company;
+use App\Models\Portfolio;
+use App\Models\Pricing;
+use App\Models\Service;
 use Illuminate\Http\Request;
 
 class LandingPageController extends Controller
@@ -13,7 +18,19 @@ class LandingPageController extends Controller
      */
     public function index()
     {
-        return view('pages.landingpage');
+        $items = Company::first();
+        $service = Service::get();
+        $pricing = Pricing::with('detail')->get();
+        $category = Category::get();
+        $portfolio = Portfolio::get();
+
+        return view('pages.landingpage')->with([
+            'items' => $items,
+            'service' => $service,
+            'pricing' => $pricing,
+            'category' => $category,
+            'portfolio' => $portfolio,
+        ]);
     }
 
     /**
