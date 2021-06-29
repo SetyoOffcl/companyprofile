@@ -27,6 +27,15 @@
                   </div>
                   <div class="form-row mt-2">
                     <div class="col-12">
+                      <h6 class="text-uppercase">About Title</h6>
+                    </div>
+                    <div class="col-lg-6">
+                      <label for="">About Title</label>
+                      <input type="text" name="home_title" value="{{ $items->about ?? '' }}" class="form-control">
+                    </div>
+                  </div>
+                  <div class="form-row mt-2">
+                    <div class="col-12">
                       <h6 class="text-uppercase">Hero Title</h6>
                     </div>
                     <div class="col-lg-6">
