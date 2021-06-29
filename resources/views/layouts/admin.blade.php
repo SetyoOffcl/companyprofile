@@ -1,3 +1,6 @@
+@php
+  $image_title = \App\Models\Company::firstOrCreate();
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +9,8 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   <title>@yield('title')</title>
+  <link rel = "icon" href ="{{ Storage::url($image_title->thumbnail ?? '') }}"
+              type = "image/x-icon">  
   @stack('before-style')
   @include('includes.admin.style')
   @stack('after-style')

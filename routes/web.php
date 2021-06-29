@@ -52,6 +52,9 @@ Route::prefix('admin')
                 //counts
                 Route::get('counts','CompanyController@counts')->name('counts');
                 Route::post('counts','CompanyController@countsstore')->name('counts.store');
+                //image
+                Route::get('image','CompanyController@image')->name('image');
+                Route::post('image','CompanyController@imagestore')->name('image.store');
             });
         });
 

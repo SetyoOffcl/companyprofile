@@ -59,4 +59,45 @@ class CompanyController extends Controller
         $data->update($items);
         return back();
     }
+    public function image()
+    {
+        $items = Company::firstOrCreate();
+        // return $items;
+        return view('pages.admin.image.index')->with([
+            'items' => $items
+        ]);   
+    }
+    public function imagestore(Request $request)
+    {
+        $items = Company::first();
+        if($request->about_image){
+            $file = $request->file('about_image'); 
+            $image_data = getimagesize($file);
+            $image_width = $image_data[0];
+            $image_height = $image_data[1];
+            
+            $height = $image_width / 720;
+            $resizedImage = Image::make($file)->resize(720,$image_height / $height)->stream(); 
+            if($image_width < $image_height){
+            $height = $image_width / 1280;
+            $resizedImage = Image::make($file)->resize(1280,$image_height / $height)->stream(); 
+            }
+            
+            $filename = $file->hashName();
+            Storage::disk('public')->put('image/' . $filename, $resizedImage->__toString());
+            $data['image'] = 'image/' . $filename;
+            
+        }
+        if ($request->about_image) {
+            $fthumbnail = $request->file('about_image'); 
+            $resizedImageThumbnail = Image::make($fthumbnail)->resize(300,300)->stream(); 
+            
+            $thumbnail = $fthumbnail->hashName();
+            Storage::disk('public')->put('thumbnail/' . $thumbnail, $resizedImageThumbnail->__toString());
+            $data['thumbnail'] = 'thumbnail/' . $thumbnail;
+        }
+        $items->update($data);
+        // return $items;
+        return back();
+    }
 }

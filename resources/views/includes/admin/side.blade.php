@@ -21,6 +21,7 @@
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-file"></i><span>Content</span></a>
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" href="{{ route('admin.title.index') }}">Title</a></li>
+                  <li><a class="nav-link" href="{{ route('admin.image') }}">Image</a></li>
                   <li><a class="nav-link" href="{{ route('admin.counts') }}">Counts</a></li>
                   <li><a class="nav-link" href="{{ route('admin.about') }}">About</a></li>
                   <li><a class="nav-link" href="{{ route('admin.service.index') }}">Service</a></li>

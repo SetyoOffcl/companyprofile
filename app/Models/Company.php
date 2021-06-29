@@ -40,5 +40,7 @@ class Company extends Model
         'faq_desc',
         'contact_title',
         'contact_desc',
+        'image',
+        'thumbnail',
     ];
 }

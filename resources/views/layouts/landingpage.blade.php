@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
 
 @php
-  $items = \App\Models\Company::select('image','title')->first();
+$items = \App\Models\Company::select('image','title','thumbnail')->first();
 @endphp
+<!DOCTYPE html>
+<html lang="en">
 <head>
+  <link rel="icon" href ="{{ Storage::url($items->thumbnail ?? '') }}" type="image/x-icon">
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
