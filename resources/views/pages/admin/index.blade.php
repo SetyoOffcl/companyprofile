@@ -12,7 +12,10 @@
               <div class="card ">
                 <div class="card-wrap">
                   <div class="card-body">
-                    Blog
+                    Blog 
+                    <div class="float-right">
+                      {{ $items['blog'] ?? 0 }}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -22,6 +25,9 @@
                 <div class="card-wrap">
                   <div class="card-body">
                     Message
+                    <div class="float-right">
+                      {{ $items['feedback'] ?? 0}}
+                    </div>
                   </div>
                 </div>
               </div>

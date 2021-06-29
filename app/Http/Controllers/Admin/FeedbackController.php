@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Feedback;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class FeedbackController extends Controller
 {
@@ -14,7 +16,33 @@ class FeedbackController extends Controller
      */
     public function index()
     {
-        //
+        
+        if (request()->ajax()) {
+            $data = Feedback::query();
+            return DataTables::of($data)
+                    ->addColumn('action', function($item){
+                        return '
+                                    <div class="dropdown">
+                                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Action
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                        <button 
+                                            type="button" 
+                                            name="delete" 
+                                            id="'.$item->id.'" 
+                                            class="dropdown-item 
+                                            text-danger delete">
+                                            Hapus
+                                        </button>
+                                        </div>
+                                    </div>
+                                ';
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+        return view('pages.admin.feedback.index');
     }
 
     /**
@@ -80,6 +108,9 @@ class FeedbackController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $fb = Feedback::find($id)->delete();
+        if ($fb) {
+            return response()->json(['status' => 200]);
+        }
     }
 }

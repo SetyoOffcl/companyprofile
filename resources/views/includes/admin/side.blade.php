@@ -10,7 +10,7 @@
               <li class="menu-header">Dashboard</li>
               <li>
                 <a class="nav-link" href="{{ route('admin.dashboard.index') }}">
-                    <i class="far fa-square"></i> 
+                    <i class="fa fa-fire"></i> 
                     <span>
                         Dashboard
                     </span>
@@ -18,7 +18,7 @@
               </li>
               <li class="menu-header">Content</li>
               <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Content</span></a>
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-file"></i><span>Content</span></a>
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" href="{{ route('admin.title.index') }}">Title</a></li>
                   <li><a class="nav-link" href="{{ route('admin.counts') }}">Counts</a></li>
@@ -34,14 +34,14 @@
                 </ul>
               </li>
               <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Portfolio</span></a>
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-briefcase"></i><span>Portfolio</span></a>
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" href="{{ route('admin.category.index') }}">Category</a></li>
                   <li><a class="nav-link" href="{{ route('admin.portfolio.index') }}">Image</a></li>
                 </ul>
               </li>
               <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Blog</span></a>
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-blog"></i><span>Blog</span></a>
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" href="{{ route('admin.blogcategory.index') }}">Category</a></li>
                   <li><a class="nav-link" href="{{ route('admin.tags.index') }}">Tags</a></li>
@@ -50,10 +50,10 @@
               </li>
               <li class="menu-header">Message</li>
               <li>
-                <a class="nav-link" href="{{ route('admin.dashboard.index') }}">
-                    <i class="far fa-square"></i> 
+                <a class="nav-link" href="{{ route('admin.feedback.index') }}">
+                    <i class="far fa-envelope"></i> 
                     <span>
-                        Dashboard
+                        Feedback
                     </span>
                 </a>
               </li>

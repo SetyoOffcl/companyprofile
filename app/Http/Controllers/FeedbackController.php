@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Feedback;
 use Illuminate\Http\Request;
 
 class FeedbackController extends Controller
@@ -34,7 +35,14 @@ class FeedbackController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $items = $request->only('name','email','message','subject');
+        $fb = Feedback::create($items);
+
+        if ($fb) {
+            return response()->json(['SUCCESS']);
+        }
+        return response()->json(['ERROR']);
+
     }
 
     /**

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Blog;
+use App\Models\Feedback;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -14,7 +16,13 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('pages.admin.index');
+        $items = [
+            'blog' => Blog::count(),
+            'feedback' => Feedback::count()
+        ];
+        return view('pages.admin.index')->with([
+            'items' => $items
+        ]);
     }
 
     /**

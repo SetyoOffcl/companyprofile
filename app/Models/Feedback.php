@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Feedback extends Model
 {
     use HasFactory;
+    
+    protected $table = 'tb_feedback';
+
+    protected $fillable = [
+        'message',
+        'subject',
+        'name',
+        'email'
+    ];
 }

@@ -445,7 +445,8 @@
         </div>
 
         <div class="col-lg-6">
-          <form action="" method="post" class="php-email-form">
+          <form id="form" method="post">
+            @csrf
             <div class="row gy-4">
 
               <div class="col-md-6">
@@ -465,11 +466,16 @@
               </div>
 
               <div class="col-md-12 text-center">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
+                <button id="create" class="btn text-white" style="background-color: #4154F1;" >Send Message</button>
+              </div>
 
-                <button type="submit">Send Message</button>
+              <div class="col-md-12 text-center">
+                <div class="d-block bg-danger text-white d-none" id="failed">
+                  Failed
+                </div>
+                <div class="d-block bg-success text-white d-none" id="success">
+                  Success
+                </div>
               </div>
 
             </div>
@@ -485,3 +491,66 @@
 
 </main><!-- End #main -->
 @endsection
+
+@push('after-script')
+<script 
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"
+    integrity="sha256-sPB0F50YUDK0otDnsfNHawYmA5M0pjjUf4TvRJkGFrI=" 
+    crossorigin="anonymous">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.js"
+    integrity="sha256-siqh9650JHbYFKyZeTEAhq+3jvkFCG8Iz+MHdr9eKrw=" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function () {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+});
+
+$('#form').submit(function(e) {
+  // console.log(1);
+   e.preventDefault();
+   let formData = new FormData(this);
+   var actionType = $('#create').val();
+        
+    document.getElementById("create").disabled = true;
+
+   $.ajax({
+      type:'POST',
+      url: '{{route('feedback.store')}}',
+       data: formData,
+       contentType: false,
+       processData: false,
+       success: (response) => {
+         if (response) {
+            this.reset();
+            document.getElementById("create").disabled = false;
+            
+            document.getElementById("success").classList.remove('d-none');
+            document.getElementById("failed").classList.add('d-none');
+            iziToast.success({
+                title: 'Data Berhasil Diubah',
+                // message: data.data.name,
+                position: 'bottomRight'
+            });
+         }
+       },
+       error: function(response){
+          //console.log(response);
+
+            document.getElementById("create").disabled = false;
+            document.getElementById("failed").classList.remove('d-none');
+
+            document.getElementById("success").classList.add('d-none');
+          iziToast.error({
+                title: 'Data Gagal Diubah',
+                position: 'bottomRight'
+            });
+       }
+   });
+});
+
+</script>
+@endpush

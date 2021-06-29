@@ -17,6 +17,7 @@ Route::get('/','LandingPageController@index')->name('/');
 Route::get('blog','BlogController@index')->name('blog.index');
 Route::get('blog/{id}','BlogController@show')->name('blog.show');
 Route::get('portfolio/{id}','LandingpageController@portfolio')->name('portfolio.show');
+Route::post('feedback','FeedbackController@store')->name('feedback.store');
 
 Route::prefix('admin')
         ->namespace('Admin')
@@ -39,6 +40,7 @@ Route::prefix('admin')
                     'footer' => 'FooterController',
                     'tags' => 'TagsController',
                     'blogcategory' => 'BlogCategoryController',
+                    'feedback' => 'FeedbackController',
                 ]);
                 //about
                 Route::get('about','CompanyController@about')->name('about');
