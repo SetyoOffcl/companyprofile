@@ -379,11 +379,11 @@
             @forelse ($faq as $fq)
             <div class="accordion-item">
               <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{ $fq->id }}">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#fq{{ $fq->id }}">
                   {{ $fq->title }}
                 </button>
               </h2>
-              <div id="{{ $fq->id }}" class="accordion-collapse collapse" data-bs-parent="#faqlist1">
+              <div id="fq{{ $fq->id }}" class="accordion-collapse collapse" data-bs-parent="#faqlist1">
                 <div class="accordion-body">
                   {{ $fq->desc }}
                 </div>
