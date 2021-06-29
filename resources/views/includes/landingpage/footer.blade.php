@@ -54,7 +54,7 @@ $contact = \App\Models\Contact::first();
             <h4>Contact Us</h4>
             <p>
               @if ($contact->address ?? 0)
-                {{ $contact->address ?? '' }}
+                {{ $contact->address ?? '' }} <br><br>
               @else
               A108 Adam Street <br>
               New York, NY 535022<br>
