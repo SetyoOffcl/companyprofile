@@ -291,7 +291,7 @@
             </div>
             <div class="member-info">
               <h4>{{ $tm->name }}</h4>
-              <span>{{ $tb->job }}</span>
+              <span>{{ $tm->job }}</span>
               <p>{{ $tm->desc }}</p>
             </div>
           </div>
