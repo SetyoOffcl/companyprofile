@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Blog;
-use App\Models\Tags;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class BlogController extends Controller
+class FeedbackController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,15 +14,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $category = Blog::groupBy('category')->select('category', DB::raw('count(*) as total'))->get();
-        $limit = Blog::take(5)->orderBy('id','desc')->get();
-        $tags = Tags::select('name')->get();
-
-        return view('pages.blog')->with([
-            'category' => $category,
-            'limit' => $limit,
-            'tags' => $tags,
-        ]);
+        //
     }
 
     /**
@@ -56,10 +46,7 @@ class BlogController extends Controller
      */
     public function show($id)
     {
-        $items = Blog::with('tags.tag')->where('slug',$id)->firstOrFail();
-        return view('pages.blogshow')->with([
-            'items' => $items
-        ]);
+        //
     }
 
     /**

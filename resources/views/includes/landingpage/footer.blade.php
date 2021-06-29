@@ -1,4 +1,8 @@
-
+@php
+$items = \App\Models\Company::select('image','title')->first();
+$footer = \App\Models\Company::first();
+$contact = \App\Models\Contact::first();
+@endphp
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
 
@@ -7,16 +11,20 @@
       <div class="container">
         <div class="row gy-4">
           <div class="col-lg-5 col-md-12 footer-info">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a href="{{ route('/') }}" class="logo d-flex align-items-center">
+              @if ($items->image ?? 0)
+              <img src="{{ Storage::url($items->image) }}" alt="">
+              @else
               <img src="{{ asset('assets/img/logo.png') }}" alt="">
-              <span>FlexStart</span>
+              @endif
+              <span>{{ $items->title ?? ''}}</span>
             </a>
-            <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
+            <p>{{ $footer->desc ?? 'Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.' }}</p>
             <div class="social-links mt-3">
-              <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-              <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-              <a href="#" class="instagram"><i class="bi bi-instagram bx bxl-instagram"></i></a>
-              <a href="#" class="linkedin"><i class="bi bi-linkedin bx bxl-linkedin"></i></a>
+              <a href="{{ $footer->twitter ?? '#' }}" class="twitter"><i class="bi bi-twitter"></i></a>
+              <a href="{{ $footer->fb ?? '#' }}" class="facebook"><i class="bi bi-facebook"></i></a>
+              <a href="{{ $footer->ig ?? '#' }}" class="instagram"><i class="bi bi-instagram bx bxl-instagram"></i></a>
+              <a href="{{ $footer->linkedin ?? '#' }}" class="linkedin"><i class="bi bi-linkedin bx bxl-linkedin"></i></a>
             </div>
           </div>
 
@@ -45,11 +53,15 @@
           <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
             <h4>Contact Us</h4>
             <p>
+              @if ($contact->address ?? 0)
+                {{ $contact->address ?? '' }}
+              @else
               A108 Adam Street <br>
               New York, NY 535022<br>
               United States <br><br>
-              <strong>Phone:</strong> +1 5589 55488 55<br>
-              <strong>Email:</strong> info@example.com<br>
+              @endif
+              <strong>Phone:</strong> {{ $contact->phone ?? '+1 5589 55488 55' }}<br>
+              <strong>Email:</strong> {{ $cintact->email ?? 'info@example.com' }}<br>
             </p>
 
           </div>
@@ -60,14 +72,7 @@
 
     <div class="container">
       <div class="copyright">
-        &copy; Copyright <strong><span>FlexStart</span></strong>. All Rights Reserved
-      </div>
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/flexstart-bootstrap-startup-template/ -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        &copy; Copyright <strong><span>{{ $items->title ?? '' }}</span></strong>. All Rights Reserved
       </div>
     </div>
   </footer><!-- End Footer -->

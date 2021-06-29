@@ -23,7 +23,7 @@ class BlogTagsFactory extends Factory
     {
         return [
             'tags_id' => mt_rand(1,5),
-            'blog_id' => mt_rand(1,200),
+            'blog_id' => mt_rand(1,100),
         ];
     }
 }

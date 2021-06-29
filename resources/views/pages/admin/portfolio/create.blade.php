@@ -32,6 +32,15 @@
     @enderror
   </div>
   <div class="form-group">
+    <label for="">Desc</label>
+    <textarea name="desc" id="" cols="30" rows="10" class="form-control" style="min-height: 100px" required></textarea>
+    @error('desc')
+      <div class="text-muted">
+        {{ $message }}
+      </div>
+    @enderror
+  </div>
+  <div class="form-group">
     <button class="btn btn-primary">Submit</button>
   </div>
 </form>

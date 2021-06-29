@@ -50,7 +50,7 @@ class PortfolioController extends Controller
             'image' => 'required|image',
             'category' => 'required',
         ]);
-        $items = $request->only('title','category');
+        $items = $request->only('title','category','desc');
         if($request->image){
             $file = $request->file('image'); 
             $image_data = getimagesize($file);
@@ -109,7 +109,7 @@ class PortfolioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $items = $request->only('title','category');
+        $items = $request->only('title','category','desc');
         
         if($request->image){
             $file = $request->file('image'); 

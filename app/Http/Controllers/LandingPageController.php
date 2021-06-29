@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
 use App\Models\Category;
+use App\Models\Client;
 use App\Models\Company;
+use App\Models\Contact;
+use App\Models\FAQ;
+use App\Models\Footer;
 use App\Models\Portfolio;
 use App\Models\Pricing;
 use App\Models\Service;
+use App\Models\Team;
+use App\Models\Testimoni;
 use Illuminate\Http\Request;
 
 class LandingPageController extends Controller
@@ -23,6 +30,13 @@ class LandingPageController extends Controller
         $pricing = Pricing::with('detail')->get();
         $category = Category::get();
         $portfolio = Portfolio::get();
+        $testimoni = Testimoni::get();
+        $team = Team::get();
+        $client = Client::get();
+        $blog = Blog::take(3)->get();
+        $footer = Footer::first();
+        $contact = Contact::first();
+        $faq = FAQ::get();
 
         return view('pages.landingpage')->with([
             'items' => $items,
@@ -30,6 +44,13 @@ class LandingPageController extends Controller
             'pricing' => $pricing,
             'category' => $category,
             'portfolio' => $portfolio,
+            'testimoni' => $testimoni,
+            'team' => $team,
+            'client' => $client,
+            'blog' => $blog,
+            'footer' => $footer,
+            'contact' => $contact,
+            'faq' => $faq,
         ]);
     }
 
@@ -97,5 +118,12 @@ class LandingPageController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function portfolio($id)
+    {
+        $items = Portfolio::findOrFail($id);
+        return view('pages.portfolio')->with([
+            'items' => $items
+        ]);   
     }
 }

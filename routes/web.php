@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/','LandingPageController@index')->name('/');
 Route::get('blog','BlogController@index')->name('blog.index');
 Route::get('blog/{id}','BlogController@show')->name('blog.show');
+Route::get('portfolio/{id}','LandingpageController@portfolio')->name('portfolio.show');
 
 Route::prefix('admin')
         ->namespace('Admin')

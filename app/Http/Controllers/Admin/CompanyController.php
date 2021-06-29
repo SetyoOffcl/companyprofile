@@ -47,10 +47,16 @@ class CompanyController extends Controller
     }
     public function counts()
     {
-        # code...
+        $items = Company::select('client','project','support','employee')->firstOrCreate();
+        return view('pages.admin.counts.index')->with([
+            'items' => $items
+        ]);
     }
-    public function countsstore()
+    public function countsstore(Request $request)
     {
-        # code...
+        $items = $request->only('client','project','support','employee');
+        $data = Company::first();
+        $data->update($items);
+        return back();
     }
 }

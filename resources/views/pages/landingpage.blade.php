@@ -98,7 +98,7 @@
           <div class="count-box">
             <i class="bi bi-emoji-smile"></i>
             <div>
-              <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1" class="purecounter"></span>
+              <span data-purecounter-start="0" data-purecounter-end="{{ $items->client ?? 99 }}" data-purecounter-duration="1" class="purecounter"></span>
               <p>Happy Clients</p>
             </div>
           </div>
@@ -108,7 +108,7 @@
           <div class="count-box">
             <i class="bi bi-journal-richtext" style="color: #ee6c20;"></i>
             <div>
-              <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
+              <span data-purecounter-start="0" data-purecounter-end="{{ $items->project ?? 99 }}" data-purecounter-duration="1" class="purecounter"></span>
               <p>Projects</p>
             </div>
           </div>
@@ -118,7 +118,7 @@
           <div class="count-box">
             <i class="bi bi-headset" style="color: #15be56;"></i>
             <div>
-              <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="1" class="purecounter"></span>
+              <span data-purecounter-start="0" data-purecounter-end="{{ $items->support ?? 99 }}" data-purecounter-duration="1" class="purecounter"></span>
               <p>Hours Of Support</p>
             </div>
           </div>
@@ -128,7 +128,7 @@
           <div class="count-box">
             <i class="bi bi-people" style="color: #bb0852;"></i>
             <div>
-              <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1" class="purecounter"></span>
+              <span data-purecounter-start="0" data-purecounter-end="{{ $items->employee ?? 99 }}" data-purecounter-duration="1" class="purecounter"></span>
               <p>Hard Workers</p>
             </div>
           </div>
@@ -209,11 +209,11 @@
           <div class="portfolio-wrap">
             <img src="{{ Storage::url($pp->image) }}" class="img-fluid" alt="">
             <div class="portfolio-info">
-              <h4>App 1</h4>
-              <p>App</p>
+              <h4>{{ $pp->category }}</h4>
+              <p>{{ $pp->desc }}</p>
               <div class="portfolio-links">
-                <a href="{{ Storage::url($pp->image) }}" data-gallery="portfolioGallery" class="portfokio-lightbox" title="App 1"><i class="bi bi-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
+                <a href="{{ Storage::url($pp->image) }}" data-gallery="portfolioGallery" class="portfokio-lightbox" title="{{ $pp->category }}"><i class="bi bi-plus"></i></a>
+                <a href="{{ route('portfolio.show',$pp->id) }}" title="More Details"><i class="bi bi-link"></i></a>
               </div>
             </div>
           </div>
@@ -234,77 +234,30 @@
     <div class="container" data-aos="fade-up">
 
       <header class="section-header">
-        <h2>Testimonials</h2>
-        <p>What they are saying about us</p>
+        <h2>{{ $items->testimonial_title ?? 'Testimonials' }}</h2>
+        <p>{{ $items_testimonial_desc ?? 'What they are saying about us' }}</p>
       </header>
 
       <div class="testimonials-slider swiper-container" data-aos="fade-up" data-aos-delay="200">
         <div class="swiper-wrapper">
 
+          @forelse ($testimoni as $ts)
+            
           <div class="swiper-slide">
             <div class="testimonial-item">
               <p>
-                Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
+                {{ $ts->desc }}
               </p>
               <div class="profile mt-auto">
-                <img src="{{ asset('assets/img/testimonials/testimonials-1.jpg') }}" class="testimonial-img" alt="">
-                <h3>Saul Goodman</h3>
-                <h4>Ceo &amp; Founder</h4>
+                <img src="{{ Storage::url($ts->image) }}" class="testimonial-img" alt="">
+                <h3>{{ $ts->name }}</h3>
+                <h4>{{ $ts->job }}</h4>
               </div>
             </div>
           </div><!-- End testimonial item -->
-
-          <div class="swiper-slide">
-            <div class="testimonial-item">
-              <p>
-                Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
-              </p>
-              <div class="profile mt-auto">
-                <img src="{{ asset('assets/img/testimonials/testimonials-2.jpg') }}" class="testimonial-img" alt="">
-                <h3>Sara Wilsson</h3>
-                <h4>Designer</h4>
-              </div>
-            </div>
-          </div><!-- End testimonial item -->
-
-          <div class="swiper-slide">
-            <div class="testimonial-item">
-              <p>
-                Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.
-              </p>
-              <div class="profile mt-auto">
-                <img src="{{ asset('assets/img/testimonials/testimonials-3.jpg') }}" class="testimonial-img" alt="">
-                <h3>Jena Karlis</h3>
-                <h4>Store Owner</h4>
-              </div>
-            </div>
-          </div><!-- End testimonial item -->
-
-          <div class="swiper-slide">
-            <div class="testimonial-item">
-              <p>
-                Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
-              </p>
-              <div class="profile mt-auto">
-                <img src="{{ asset('assets/img/testimonials/testimonials-4.jpg') }}" class="testimonial-img" alt="">
-                <h3>Matt Brandon</h3>
-                <h4>Freelancer</h4>
-              </div>
-            </div>
-          </div><!-- End testimonial item -->
-
-          <div class="swiper-slide">
-            <div class="testimonial-item">
-              <p>
-                Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
-              </p>
-              <div class="profile mt-auto">
-                <img src="{{ asset('assets/img/testimonials/testimonials-5.jpg') }}" class="testimonial-img" alt="">
-                <h3>John Larson</h3>
-                <h4>Entrepreneur</h4>
-              </div>
-            </div>
-          </div><!-- End testimonial item -->
+          @empty
+            
+          @endforelse
 
         </div>
         <div class="swiper-pagination"></div>
@@ -320,63 +273,28 @@
     <div class="container" data-aos="fade-up">
 
       <header class="section-header">
-        <h2>Team</h2>
-        <p>Our hard working team</p>
+        <h2>{{ $items->team_title ?? 'Team' }}</h2>
+        <p>{{ $items->team_desc ?? 'Our hard working team' }}</p>
       </header>
 
       <div class="row gy-4">
 
+        @forelse ($team as $tm)
         <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
           <div class="member">
             <div class="member-img">
-              <img src="{{ asset('assets/img/team/team-1.jpg') }}" class="img-fluid" alt="">
+              <img src="{{ Storage::url($tm->image) }}" class="img-fluid" alt="">
             </div>
             <div class="member-info">
-              <h4>Walter White</h4>
-              <span>Chief Executive Officer</span>
-              <p>Velit aut quia fugit et et. Dolorum ea voluptate vel tempore tenetur ipsa quae aut. Ipsum exercitationem iure minima enim corporis et voluptate.</p>
+              <h4>{{ $tm->name }}</h4>
+              <span>{{ $tb->job }}</span>
+              <p>{{ $tm->desc }}</p>
             </div>
           </div>
         </div>
-
-        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
-          <div class="member">
-            <div class="member-img">
-              <img src="{{ asset('assets/img/team/team-2.jpg') }}" class="img-fluid" alt="">
-            </div>
-            <div class="member-info">
-              <h4>Sarah Jhonson</h4>
-              <span>Product Manager</span>
-              <p>Quo esse repellendus quia id. Est eum et accusantium pariatur fugit nihil minima suscipit corporis. Voluptate sed quas reiciendis animi neque sapiente.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="300">
-          <div class="member">
-            <div class="member-img">
-              <img src="{{ asset('assets/img/team/team-3.jpg') }}" class="img-fluid" alt="">
-            </div>
-            <div class="member-info">
-              <h4>William Anderson</h4>
-              <span>CTO</span>
-              <p>Vero omnis enim consequatur. Voluptas consectetur unde qui molestiae deserunt. Voluptates enim aut architecto porro aspernatur molestiae modi.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="400">
-          <div class="member">
-            <div class="member-img">
-              <img src="{{ asset('assets/img/team/team-4.jpg') }}" class="img-fluid" alt="">
-            </div>
-            <div class="member-info">
-              <h4>Amanda Jepson</h4>
-              <span>Accountant</span>
-              <p>Rerum voluptate non adipisci animi distinctio et deserunt amet voluptas. Quia aut aliquid doloremque ut possimus ipsum officia.</p>
-            </div>
-          </div>
-        </div>
+        @empty
+          
+        @endforelse
 
       </div>
 
@@ -390,20 +308,17 @@
     <div class="container" data-aos="fade-up">
 
       <header class="section-header">
-        <h2>Our Clients</h2>
-        <p>Temporibus omnis officia</p>
+        <h2>{{ $items->client_title ?? 'Our Clients' }}</h2>
+        <p>{{ $items->client_desc ?? 'Temporibus omnis officia' }}</p>
       </header>
 
       <div class="clients-slider swiper-container">
         <div class="swiper-wrapper align-items-center">
-          <div class="swiper-slide"><img src="{{ asset('assets/img/clients/client-1.png') }}" class="img-fluid" alt=""></div>
-          <div class="swiper-slide"><img src="{{ asset('assets/img/clients/client-2.png') }}" class="img-fluid" alt=""></div>
-          <div class="swiper-slide"><img src="{{ asset('assets/img/clients/client-3.png') }}" class="img-fluid" alt=""></div>
-          <div class="swiper-slide"><img src="{{ asset('assets/img/clients/client-4.png') }}" class="img-fluid" alt=""></div>
-          <div class="swiper-slide"><img src="{{ asset('assets/img/clients/client-5.png') }}" class="img-fluid" alt=""></div>
-          <div class="swiper-slide"><img src="{{ asset('assets/img/clients/client-6.png') }}" class="img-fluid" alt=""></div>
-          <div class="swiper-slide"><img src="{{ asset('assets/img/clients/client-7.png') }}" class="img-fluid" alt=""></div>
-          <div class="swiper-slide"><img src="{{ asset('assets/img/clients/client-8.png') }}" class="img-fluid" alt=""></div>
+          @forelse ($client as $cl)
+          <div class="swiper-slide"><img src="{{ Storage::url($cl->image) }}" class="img-fluid" alt=""></div>
+          @empty
+            
+          @endforelse
         </div>
         <div class="swiper-pagination"></div>
       </div>
@@ -417,38 +332,24 @@
     <div class="container" data-aos="fade-up">
 
       <header class="section-header">
-        <h2>Blog</h2>
-        <p>Recent posts form our Blog</p>
+        <h2>{{ $items->blog_title ?? 'Blog' }}</h2>
+        <p>{{ $items->blog_desc ?? 'Recent posts form our Blog' }}</p>
       </header>
 
       <div class="row">
 
+        @forelse ($blog as $b)
         <div class="col-lg-4">
           <div class="post-box">
-            <div class="post-img"><img src="{{ asset('assets/img/blog/blog-1.jpg') }}" class="img-fluid" alt=""></div>
-            <span class="post-date">Tue, September 15</span>
-            <h3 class="post-title">Eum ad dolor et. Autem aut fugiat debitis voluptatem consequuntur sit</h3>
-            <a href="blog-singe.html" class="readmore stretched-link mt-auto"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
+            <div class="post-img"><img src="{{ Storage::url($b->image) }}" class="img-fluid" alt=""></div>
+            <span class="post-date">{{ Str::limit($b->title, 20, '...') }}</span>
+            <h3 class="post-title">{!! Str::limit($b->desc, 100, '...') !!}</h3>
+            <a href="{{ route('blog.show',$b->slug) }}" class="readmore stretched-link mt-auto"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
           </div>
         </div>
-
-        <div class="col-lg-4">
-          <div class="post-box">
-            <div class="post-img"><img src="{{ asset('assets/img/blog/blog-2.jpg') }}" class="img-fluid" alt=""></div>
-            <span class="post-date">Fri, August 28</span>
-            <h3 class="post-title">Et repellendus molestiae qui est sed omnis voluptates magnam</h3>
-            <a href="blog-singe.html" class="readmore stretched-link mt-auto"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
-          </div>
-        </div>
-
-        <div class="col-lg-4">
-          <div class="post-box">
-            <div class="post-img"><img src="{{ asset('assets/img/blog/blog-3.jpg') }}" class="img-fluid" alt=""></div>
-            <span class="post-date">Mon, July 11</span>
-            <h3 class="post-title">Quia assumenda est et veritatis aut quae</h3>
-            <a href="blog-singe.html" class="readmore stretched-link mt-auto"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
-          </div>
-        </div>
+        @empty
+          
+        @endforelse
 
       </div>
 
@@ -463,92 +364,30 @@
     <div class="container" data-aos="fade-up">
 
       <header class="section-header">
-        <h2>F.A.Q</h2>
-        <p>Frequently Asked Questions</p>
+        <h2>{{ $items->faq_title ?? 'F.A.Q' }}</h2>
+        <p>{{ $items->faq_desc ?? 'Frequently Asked Questions' }}</p>
       </header>
 
       <div class="row">
         <div class="col-12">
           <!-- F.A.Q List 1-->
           <div class="accordion accordion-flush" id="faqlist1">
+            @forelse ($faq as $fq)
             <div class="accordion-item">
               <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-1">
-                  Non consectetur a erat nam at lectus urna duis?
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{ $fq->id }}">
+                  {{ $fq->title }}
                 </button>
               </h2>
-              <div id="faq-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist1">
+              <div id="{{ $fq->id }}" class="accordion-collapse collapse" data-bs-parent="#faqlist1">
                 <div class="accordion-body">
-                  Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.
+                  {{ $fq->desc }}
                 </div>
               </div>
             </div>
-
-            <div class="accordion-item">
-              <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-2">
-                  Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque?
-                </button>
-              </h2>
-              <div id="faq-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist1">
-                <div class="accordion-body">
-                  Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
-                </div>
-              </div>
-            </div>
-
-            <div class="accordion-item">
-              <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-3">
-                  Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi?
-                </button>
-              </h2>
-              <div id="faq-content-3" class="accordion-collapse collapse" data-bs-parent="#faqlist1">
-                <div class="accordion-body">
-                  Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed odio morbi quis
-                </div>
-              </div>
-            </div>
-            
-            <div class="accordion-item">
-              <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-3">
-                  Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi?
-                </button>
-              </h2>
-              <div id="faq-content-3" class="accordion-collapse collapse" data-bs-parent="#faqlist1">
-                <div class="accordion-body">
-                  Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed odio morbi quis
-                </div>
-              </div>
-            </div>
-            
-            <div class="accordion-item">
-              <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-3">
-                  Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi?
-                </button>
-              </h2>
-              <div id="faq-content-3" class="accordion-collapse collapse" data-bs-parent="#faqlist1">
-                <div class="accordion-body">
-                  Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed odio morbi quis
-                </div>
-              </div>
-            </div>
-            
-            <div class="accordion-item">
-              <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-3">
-                  Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi?
-                </button>
-              </h2>
-              <div id="faq-content-3" class="accordion-collapse collapse" data-bs-parent="#faqlist1">
-                <div class="accordion-body">
-                  Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed odio morbi quis
-                </div>
-              </div>
-            </div>
-
+            @empty
+              
+            @endforelse
           </div>
         </div>
 
@@ -564,8 +403,8 @@
     <div class="container" data-aos="fade-up">
 
       <header class="section-header">
-        <h2>Contact</h2>
-        <p>Contact Us</p>
+        <h2>{{ $items->contact_title ?? 'Contact' }}</h2>
+        <p>{{ $items->contact_desc ?? 'Contact Us' }}</p>
       </header>
 
       <div class="row gy-4">
@@ -577,28 +416,28 @@
               <div class="info-box">
                 <i class="bi bi-geo-alt"></i>
                 <h3>Address</h3>
-                <p>A108 Adam Street,<br>New York, NY 535022</p>
+                <p>{!! $contact->address ?? 'A108 Adam Street,<br>New York, NY 535022' !!}</p>
               </div>
             </div>
             <div class="col-md-6">
               <div class="info-box">
                 <i class="bi bi-telephone"></i>
                 <h3>Call Us</h3>
-                <p>+1 5589 55488 55<br>+1 6678 254445 41</p>
+                <p>{!! $contact->phone ?? '+1 5589 55488 55<br>+1 6678 254445 41' !!}</p>
               </div>
             </div>
             <div class="col-md-6">
               <div class="info-box">
                 <i class="bi bi-envelope"></i>
                 <h3>Email Us</h3>
-                <p>info@example.com<br>contact@example.com</p>
+                <p>{!! $contact->email ?? 'info@example.com<br>contact@example.com' !!}</p>
               </div>
             </div>
             <div class="col-md-6">
               <div class="info-box">
                 <i class="bi bi-clock"></i>
                 <h3>Open Hours</h3>
-                <p>Monday - Friday<br>9:00AM - 05:00PM</p>
+                <p>{!! $contact->open ?? 'Monday - Friday<br>9:00AM - 05:00PM' !!}</p>
               </div>
             </div>
           </div>
@@ -606,7 +445,7 @@
         </div>
 
         <div class="col-lg-6">
-          <form action="forms/contact.php" method="post" class="php-email-form">
+          <form action="" method="post" class="php-email-form">
             <div class="row gy-4">
 
               <div class="col-md-6">

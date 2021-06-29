@@ -8,9 +8,6 @@
             <img alt="image" src="{{Auth::user()->image ? Storage::url(Auth::user()->image) : 'https://ui-avatars.com/api/?name='.Auth::user()->name}}" class="rounded-circle mr-1">
             <div class="d-sm-none d-lg-inline-block">{{ Auth::user()->name }}</div></a>
             <div class="dropdown-menu dropdown-menu-right">
-              <a href="features-profile.html" class="dropdown-item has-icon">
-                <i class="far fa-user"></i> Profile
-              </a>
               <div class="dropdown-divider"></div>
               <a href="#" class="dropdown-item has-icon text-danger" 
                     onclick="event.preventDefault();
