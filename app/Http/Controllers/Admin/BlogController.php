@@ -150,10 +150,16 @@ class BlogController extends Controller
         $tags = Tags::all();
         $category = BlogCategory::all();
 
+        $itemstags[] = 0;
+        foreach ($items->tags as $key) {
+            $itemstags[] = $key->tags_id;
+        }
+
         return view('pages.admin.blog.edit')->with([
             'tags' => $tags,
             'category' => $category,
-            'items' => $items
+            'items' => $items,
+            'itemstags' => $itemstags
         ]);
     }
 

@@ -42,7 +42,7 @@
                   <label for="">Tags</label>
                   <select class="js-example-basic-multiple" name="tag[]" multiple="multiple">
                     @foreach ($tags as $index => $tag)
-                      <option value="{{ $tag->id }}" @if(($items->tags[$index]->tags_id ?? 0) == $cat->id) selected @endif>{{ $tag->name }}</option>
+                      <option value="{{ $tag->id }}" @if(in_array($tag->id, $itemstags)) selected @endif>{{ $tag->name }}</option>
                     @endforeach
                   </select>
                   @error('tag')

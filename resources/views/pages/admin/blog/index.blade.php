@@ -89,7 +89,7 @@
                 {data: 'id', name:'id' ,visible: false, searchable: false},
                 {data: 'title' , name: 'title'},
                 {data: 'category' , name: 'category'},
-                {data: 'tags' , name: 'tags', searchable:true, orderable:true},
+                {data: 'tags' , name: 'tags', searchable:false, orderable:false},
                 {data: 'image' , name: 'image', searchable:false, orderable:false},
                 {data: 'action' , name: 'action', width:'10%', searchable:false, orderable:false},
             ],
