@@ -69,7 +69,7 @@
         var datatables = $('#table').DataTable({
             processing: true,
             // dom: 'Bfrtip',
-            serverside: true,
+            serverSide: true,
             scrollX: false,
             ordering: true,
             autoWidth: false,
