@@ -13,7 +13,7 @@
     - Authentication , CRUD blog, portfolio, etc. 
 
 **What's in it?**
-- Laravel 7.x
+- Laravel 8.x
 - Stisla admin
 - Flex Start Bootstrap
 
